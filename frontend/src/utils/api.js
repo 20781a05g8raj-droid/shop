@@ -35,6 +35,7 @@ export const MOCK_PRODUCTS = [
 export const fetchProducts = async (params = {}) => {
   try {
     const { data } = await api.get('/products', { params });
+    if (typeof data === 'string') throw new Error('Invalid JSON response');
     return data;
   } catch {
     let filtered = [...MOCK_PRODUCTS];
@@ -53,6 +54,7 @@ export const fetchProducts = async (params = {}) => {
 export const fetchProductById = async (id) => {
   try {
     const { data } = await api.get(`/products/${id}`);
+    if (typeof data === 'string') throw new Error('Invalid JSON response');
     return data;
   } catch {
     return MOCK_PRODUCTS.find(p => p._id === id);
@@ -62,6 +64,7 @@ export const fetchProductById = async (id) => {
 export const fetchFeatured = async () => {
   try {
     const { data } = await api.get('/products/featured');
+    if (typeof data === 'string') throw new Error('Invalid JSON response');
     return data;
   } catch {
     return MOCK_PRODUCTS.filter(p => p.featured);
@@ -71,6 +74,7 @@ export const fetchFeatured = async () => {
 export const fetchCategories = async () => {
   try {
     const { data } = await api.get('/products/categories');
+    if (typeof data === 'string') throw new Error('Invalid JSON response');
     return data;
   } catch {
     return [...new Set(MOCK_PRODUCTS.map(p => p.category))];
